@@ -32,7 +32,7 @@ playthrough evidence is maintained in the app tests.
 ```sh
 npm ci --prefix active-system/tools/app-builder --ignore-scripts
 npm ci --prefix tests --ignore-scripts
-node apps/system/story-cards/tests/model.test.mjs
+node apps/games/04-rive-interactives/story-cards/tests/model.test.mjs
 python3 active-system/scripts/build-public-apps.py --output .build/story-cards-test --apps story-cards
 python3 -m http.server 18414 --bind 127.0.0.1 --directory .build/story-cards-test
 CODI_TEST_CDP=http://127.0.0.1:19414 CODI_STORY_URL=http://127.0.0.1:18414/ node tests/story-cards-browser.test.mjs
