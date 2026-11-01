@@ -1,47 +1,43 @@
-# Story Cards
+# Story Cards — desktop integration
 
-**Interactive animated story · Rive web runtime + application state · single-player · phone required · flat-screen app**
+Story Cards is a twelve-node branching narrative with three endings. The story
+graph, choice history, visited nodes, discovered endings and transition state
+are deterministic and app-owned. Choices remain semantic HTML buttons, with a
+Canvas presentation for the current scene.
 
-> Planned design, not implemented or browser-tested. `index.pseudo.mjs` is an explanatory entry point, not a playable game.
+The app exports synchronous `mount(host)`, supports desktop and phone-sized
+layouts, saves and opens through the signed-in desktop's My files, restores
+paused and routes saved files back from Files. Restart and open discard
+confirmation, changed/conflicting-file notices and idempotent teardown are
+included.
 
-## Experience
+Saving marks the window protected until storage responds, pauses the story and
+captures an exact logical snapshot. Later choices remain unsaved. Open and
+restart confirmations recheck the story after the answer so newer progress cannot
+be discarded. The story pauses when its desktop window loses focus, is minimized,
+rolled up, hidden, or the browser loses visibility; Resume is explicit. Loaded
+history is replayed during validation so malformed edges or a mismatched current
+scene are rejected.
 
-Explore a tiny branching adventure through expressive animated cards and clear choices.
+## Remaining gates
 
-## What this demonstrates
+No authored `story-cast.riv` is supplied. The scene card is a clearly labeled
+procedural fallback, with no claim that Rive acceptance is complete. Authored
+character art, environment art and narration audio remain to be supplied.
+Physical-phone testing remains open; automated desktop and emulated-phone
+playthrough evidence is maintained in the app tests.
 
-- Multiple artboards and character states
-- Data-bound text and choice UI
-- Branching authored content
+## Local tests
 
-## Rules and complete loop
+```sh
+npm ci --prefix active-system/tools/app-builder --ignore-scripts
+npm ci --prefix tests --ignore-scripts
+node apps/system/story-cards/tests/model.test.mjs
+python3 active-system/scripts/build-public-apps.py --output .build/story-cards-test --apps story-cards
+python3 -m http.server 18414 --bind 127.0.0.1 --directory .build/story-cards-test
+CODI_TEST_CDP=http://127.0.0.1:19414 CODI_STORY_URL=http://127.0.0.1:18414/ node tests/story-cards-browser.test.mjs
+```
 
-- A finite, validated story graph has choice nodes and three endings. Choices commit before transitions.
-- No generative backend or AI dependency. Text is authored, captions available and history readable.
-- Loading returns to a node/choice state, not a half-finished visual transition.
-
-## Bounded polished release
-
-Twelve story nodes, three endings, two characters and replayable choices.
-
-- Readable type, skip animation and transcript
-- Transitions respect reduced-motion settings
-- Replays do not overwrite unlocked endings silently
-
-No multiplayer, accounts, server simulation or generic editor is required. Start, rules/help, play/activity, pause, outcome/goal feedback and retry must all be complete. Settings include volume/mute, reduced motion, contrast and game-specific options where meaningful. State changes occur in the game model; animations illustrate them.
-
-## Rive inside this app
-
-Animated cast, environment mood and transitions; choices stay semantic and accessible. The requested asset is `story-cast.riv`; it is **not included**. See [RIVE.md](RIVE.md) for the authoring/integration contract. A placeholder or unrelated animated logo does not satisfy this requirement.
-
-## Save behavior
-
-Exact logical story node, flags and complete choice history. See [SAVE.md](SAVE.md). Loading starts paused; resume is explicit. Restart and load cancel stale callbacks and any owned AI work.
-
-## Build sequence
-
-Implement the rule loop in [gameplay.pseudo.txt](gameplay.pseudo.txt); bind the exact app lifecycle from [index.pseudo.mjs](index.pseudo.mjs); complete [CONTROLS.md](CONTROLS.md); author/integrate [RIVE.md](RIVE.md); then satisfy [ACCEPTANCE.md](ACCEPTANCE.md). Do not add XR or a 3D engine solely to widen the technology list.
-
-Target wave: **2**. Integrator first reads [AGENTS.md](../../AGENTS.md); do not guess host APIs from symbolic helper names.
-
-Use original/licensed artwork and audio. Keep the scope small enough to polish; expand content only after the release gates pass.
+The fixture must be served as the build root's `index.html`. The registered
+desktop account test requires the shared game registration added by the primary
+integration branch.
