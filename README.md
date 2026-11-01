@@ -41,3 +41,8 @@ CODI_TEST_CDP=http://127.0.0.1:19414 CODI_STORY_URL=http://127.0.0.1:18414/ node
 The fixture must be served as the build root's `index.html`. The registered
 desktop account test requires the shared game registration added by the primary
 integration branch.
+
+If a previously opened or saved story is deleted elsewhere, saving it again
+reports the deletion instead of silently recreating it. Choose a different save
+path to keep a copy. The account-backed desktop and phone-sized workflow tests
+cover this alongside server synchronization; physical touch remains untested.
