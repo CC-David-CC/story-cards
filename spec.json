@@ -1,0 +1,118 @@
+{
+  "category": "04-rive-interactives",
+  "id": "story-cards",
+  "title": "Story Cards",
+  "genre": "Interactive animated story",
+  "pitch": "Explore a tiny branching adventure through expressive animated cards and clear choices.",
+  "capabilities": [
+    "Multiple artboards and character states",
+    "Data-bound text and choice UI",
+    "Branching authored content"
+  ],
+  "rules": [
+    "A finite, validated story graph has choice nodes and three endings. Choices commit before transitions.",
+    "No generative backend or AI dependency. Text is authored, captions available and history readable.",
+    "Loading returns to a node/choice state, not a half-finished visual transition."
+  ],
+  "content": "Twelve story nodes, three endings, two characters and replayable choices.",
+  "state": [
+    "story version",
+    "current node and choice history",
+    "flags and visited nodes",
+    "ending collection",
+    "text/audio settings"
+  ],
+  "actions": [
+    {
+      "command": "choose",
+      "desktop": "Number keys or choice buttons",
+      "phone": "Large choice buttons",
+      "xr": "Not applicable; plays as a flat browser app."
+    },
+    {
+      "command": "advance",
+      "desktop": "Space / Next",
+      "phone": "Next button",
+      "xr": "Not applicable; plays as a flat browser app."
+    },
+    {
+      "command": "history",
+      "desktop": "History panel",
+      "phone": "History panel",
+      "xr": "Not applicable; plays as a flat browser app."
+    }
+  ],
+  "rive": {
+    "asset": "story-cast.riv",
+    "role": "Animated cast, environment mood and transitions; choices stay semantic and accessible.",
+    "properties": {
+      "scene": "integer",
+      "speaker": "enum owl/robot",
+      "emotion": "enum calm/worried/joy",
+      "transitionProgress": "number 0..1"
+    },
+    "events": [
+      "enter",
+      "choice",
+      "ending"
+    ],
+    "states": [
+      "idle",
+      "speak",
+      "react",
+      "transition"
+    ],
+    "artboard": "Main",
+    "stateMachine": "Presentation",
+    "assetStatus": "to_author"
+  },
+  "polish": [
+    "Readable type, skip animation and transcript",
+    "Transitions respect reduced-motion settings",
+    "Replays do not overwrite unlocked endings silently"
+  ],
+  "tests": [
+    "All choices resolve to valid nodes.",
+    "Every ending is reachable.",
+    "Double selection commits one choice.",
+    "Save during transition records the destination node consistently.",
+    "Phone and keyboard can reach all endings.",
+    "Missing voice audio does not block story."
+  ],
+  "loop": [
+    "validate selected choice against active node",
+    "commit flags/history and destination",
+    "reconcile text/semantic choice list",
+    "start cancellable Rive transition",
+    "persist node checkpoint and expose history"
+  ],
+  "save": "Exact logical story node, flags and complete choice history.",
+  "wave": 2,
+  "specVersion": 1,
+  "status": "planned",
+  "implementation": "not_started",
+  "runtimeTests": "not_run",
+  "engine": "Rive web runtime + application state",
+  "singlePlayer": true,
+  "phoneRequired": true,
+  "mountContract": {
+    "export": "mount",
+    "synchronous": true,
+    "returns": [
+      "element",
+      "dispose"
+    ],
+    "productionEntry": "index.mjs",
+    "suppliedEntry": "index.pseudo.mjs"
+  },
+  "xrRequired": false,
+  "riveRequired": true,
+  "riveAssetIncluded": false,
+  "documentKind": "Exact logical story node, flags and complete choice history.",
+  "sources": [
+    "S14",
+    "S15",
+    "S16",
+    "S17"
+  ]
+}

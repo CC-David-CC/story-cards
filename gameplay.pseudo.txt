@@ -1,0 +1,47 @@
+HIGH-LEVEL GAMEPLAY PSEUDOCODE — Story Cards
+Status: design only. Helpers and engine APIs must be implemented/qualified.
+
+INITIALIZE
+  construct app-owned rules/content state from a validated fresh seed or document
+  allocate only the selected engine's model/world; do not start a second preview model
+  load original assets and validate Rive names/types
+  install commands from CONTROLS.md; render a title and playable preview
+
+WHEN PLAY / RESUME
+  clear stale held input and timing debt
+  enter the active game phase; unlock audio only through a user gesture
+
+PER AUTHORITATIVE SIMULATION / RULE STEP
+  1. validate selected choice against active node
+  2. commit flags/history and destination
+  3. reconcile text/semantic choice list
+  4. start cancellable Rive transition
+  5. persist node checkpoint and expose history
+
+PER PRESENTATION FRAME
+  read current committed model/world; interpolate views only where appropriate
+  derive Rive properties/triggers from committed state, then advance/draw once
+  upload dirty artboard textures only; render scene without stepping physics twice
+  leave menus responsive while paused without advancing game score or simulation
+
+SAVE / LOAD
+  Exact logical story node, flags and complete choice history.
+  validate document off to the side; commit replacement only if complete and valid
+  cancel old input/jobs/callbacks; return to paused current game
+
+RESIZE / SUSPEND
+  resize from the app container; clear timing debt on suspend and resume explicitly
+  do not change gameplay geometry/rules merely because display pixels changed
+
+DISPOSE
+  reject future commands and late results; stop clocks/input/audio immediately
+  release per-instance engine, Rive artboards, textures, observers and jobs
+  never destroy another app or a shared desktop service
+
+GAME-SPECIFIC EDGE CASES
+- All choices resolve to valid nodes.
+- Every ending is reachable.
+- Double selection commits one choice.
+- Save during transition records the destination node consistently.
+- Phone and keyboard can reach all endings.
+- Missing voice audio does not block story.
