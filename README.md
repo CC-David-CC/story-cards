@@ -46,3 +46,7 @@ If a previously opened or saved story is deleted elsewhere, saving it again
 reports the deletion instead of silently recreating it. Choose a different save
 path to keep a copy. The account-backed desktop and phone-sized workflow tests
 cover this alongside server synchronization; physical touch remains untested.
+
+## Design requirements
+
+The original [design brief, controls, save rules, artwork and acceptance plans](design/README.md) are retained as reference. They describe targets; the implementation and qualification status above takes precedence.

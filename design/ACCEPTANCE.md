@@ -1,8 +1,10 @@
+> Original design reference from 2026-10-30. This describes intended behavior, not current implementation or qualification. The current app README is authoritative for status. Pseudocode and template JSON here are documentation, not build entries.
+
 # Acceptance — Story Cards
 
 **All runtime cases are NOT RUN.** This file is a plan; document checks are not gameplay evidence.
 
-Apply all C01–C24 in [common acceptance](../../docs/ACCEPTANCE-COMMON.md). No immersive support is claimed or required for this flat-screen app.
+Apply all C01–C24 in [common acceptance](../../../../../docs/games/design-reference/ACCEPTANCE-COMMON.md). No immersive support is claimed or required for this flat-screen app.
 
 ## Game-specific cases
 
